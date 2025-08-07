@@ -18,7 +18,7 @@ init_seed(args.seed)
 
 if torch.cuda.is_available() and torch.cuda.device_count() > 0:
     device = torch.device('cuda:0')  # Use the first GPU
-    print(f"Using GPU: {torch.cuda.get_device_name(0)}")
+    print(f"Using GPU    : {torch.cuda.get_device_name(0)}")
 else:
     device = torch.device('cpu')
     print("CUDA is not available. Falling back to CPU.")
