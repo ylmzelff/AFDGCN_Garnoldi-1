@@ -1,33 +1,26 @@
 import argparse
 import configparser
+from pathlib import Path
 
 # *****************************************  参数初始化配置 ****************************************** #
 Mode = 'train'
 DEBUG = 'True'
-#DATASET = 'Kcetas'
-#DATASET = 'PEMS04'
-#DATASET = 'Konya'
-#DATASET = 'Kayseri'
 DATASET = 'Kayseri_Serit'
-#DEVICE = 'cuda:0'
 DEVICE = 'cpu'
 MODEL = 'AFDGCN'
-#GRAPH = "/content/AFDGCN_Garnoldi/data/Kayseri/kayseri_kavsaklar.csv"
-GRAPH = "/content/AFDGCN_Garnoldi/data/Kayseri/kol_bazli_graph.csv"
-#GRAPH = "/content/AFDGCN_Garnoldi/data/Konya/konya_kavşaklar.csv"
-#GRAPH = "/content/AFDGCN_Garnoldi/data/Kcetas/conn_graph.csv"
-#GRAPH = "./data/PEMS04/PEMS04.csv"
+GRAPH = 'data/Kayseri/kol_bazli_graph.csv'
 K = 0.1
 ALGO_OPTIONS = ['default', 'Garnoldi', 'APPNP', 'GPRGNN']
 ALGO = ALGO_OPTIONS[1]
-# FILENAME_ID = "./data/PEMS03/PEMS03.txt"
 FILENAME_ID = None
 
-# 1. get configuration
-config_file = '/content/AFDGCN_Garnoldi/conf/{}_{}.conf'.format(DATASET, MODEL)
-print(config_file)
+# ✅ 1. Path’i Hugging Face uyumlu yap
+BASE_DIR = Path(__file__).resolve().parent
+CONF_PATH = BASE_DIR / 'conf' / f'{DATASET}_{MODEL}.conf'
+
+# ✅ 2. Config dosyasını oku
 config = configparser.ConfigParser()
-config.read(config_file)
+config.read(CONF_PATH)
 
 # 2. parser
 args = argparse.ArgumentParser(description='arguments')
